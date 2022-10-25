@@ -44,6 +44,11 @@ public class mdiLogistica extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -62,7 +67,7 @@ public class mdiLogistica extends javax.swing.JFrame {
             .addGap(0, 279, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Archivo");
+        jMenu1.setText("Ingreso de datos");
 
         jMenu3.setText("Mantenimientos");
         jMenu3.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +76,7 @@ public class mdiLogistica extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem3.setText("Mantenimiento Vendedores");
+        jMenuItem3.setText("Mantenimiento producto");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -79,7 +84,7 @@ public class mdiLogistica extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem3);
 
-        jMenuItem4.setText("Mantenimiento Tipo Documento");
+        jMenuItem4.setText("Mantenimiento existencias");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -87,7 +92,7 @@ public class mdiLogistica extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem4);
 
-        jMenuItem5.setText("Mantenimiento Cobradores");
+        jMenuItem5.setText("Mantenimiento conceptos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -95,7 +100,7 @@ public class mdiLogistica extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem5);
 
-        jMenuItem6.setText("Mantenimiento Clientes");
+        jMenuItem6.setText("Mantenimiento transporte");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -103,7 +108,7 @@ public class mdiLogistica extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
-        jMenuItem7.setText("Mantenimiento Bitacora");
+        jMenuItem7.setText("Mantenimiento conductores");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -111,9 +116,25 @@ public class mdiLogistica extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem7);
 
+        jMenuItem8.setText("Mantenimiento salidas");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem9.setText("Mantenimiento destinos");
+        jMenu3.add(jMenuItem9);
+
         jMenu1.add(jMenu3);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Procesos");
+
+        jMenuItem10.setText("Movimientos");
+        jMenu2.add(jMenuItem10);
+
+        jMenuItem11.setText("Inventariado");
+        jMenu2.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -199,14 +220,19 @@ public class mdiLogistica extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }
