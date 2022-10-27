@@ -182,7 +182,7 @@ public class frmLogin extends javax.swing.JFrame {
 
                         case "Area Seguridad":
                         try {
-                            daoAcceso acceso = new daoAcceso(usuarioAConsultar.getTipo());
+                            daoAcceso acceso = new daoAcceso(usuarioAConsultar.getUsutipo());
                             this.dispose();
                         } catch (Exception e) {
                             System.out.println(e);

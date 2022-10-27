@@ -20,8 +20,10 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import seguridad.controlador.clsSeguridad;
 import seguridad.controlador.clsUsuarioConectado;
 import seguridad.modelo.clsConexion;
+import seguridad.modelo.daoBitacora;
 
 
 
@@ -32,23 +34,11 @@ import seguridad.modelo.clsConexion;
  */
 
 public class frmCambioContrasena extends javax.swing.JInternalFrame {
-    private static final String SQL_UPDATE = "UPDATE tbl_usuario SET usucontrasena=? WHERE usuid =?";
-    Connection con = null;
-    ResultSet rs = null;
-    PreparedStatement stm = null;
-    public int usuid;
-    
-    public frmCambioContrasena(int usunombre) {
-     this.usuid=1;
-     clsUsuario AConsultar = new clsUsuario();
-        daoUsuario perDAO = new daoUsuario();
-    }
-    
-    
+   int codigoAplicacion=7;
+      
     
     public frmCambioContrasena() {
         initComponents();
-        lblUsuarioRegistrado.setText(clsUsuarioConectado.getUsunombre());
     }
  
     
@@ -179,20 +169,17 @@ public class frmCambioContrasena extends javax.swing.JInternalFrame {
         PreparedStatement stmt = null;
         int rows = 0;
         clsUsuario AConsultar = new clsUsuario();
-        daoUsuario perDAO = new daoUsuario();
-        clsUsuarioConectado usuarioRegistrado = new clsUsuarioConectado();                
-        usuarioRegistrado.setUsunombre(txtnueva_contrasena.getText().trim());
-        
+        daoUsuario usuarioDAO = new daoUsuario();
+        AConsultar.setUsuid(clsUsuarioConectado.getUsuid());
+        AConsultar = usuarioDAO.query(AConsultar);
+        clsSeguridad c = new clsSeguridad();
+        //usuarioRegistrado.setUsunombre(txtnueva_contrasena.getText().trim());
         if(txtnueva_contrasena.getText().equals(txtconfi_contrasena.getText())){
             try{
-                String updateQuery = "UPDATE `tbl_usuario` SET `usucontrasena`=? WHERE usuid=?";
-                System.out.println(updateQuery);
-                con = DriverManager.getConnection("jdbc:mysql://localhost/proyectobd122022","remoto","123456");
-                stmt=con.prepareStatement(updateQuery);
-                stmt.setString(1, txtconfi_contrasena.getText());
-              //stmt.usuarioRegistrado.setUsunombre(2,txtusuario ); CON LA CREACION DE ESTE UPDATE USE DE GUIA EL "UPDATE DE daoUsuario"
-                rows = stmt.executeUpdate();
-                System.out.println(stmt);
+                AConsultar.setUsucontrasena(c.encode(txtconfi_contrasena.getText()));
+                usuarioDAO.update(AConsultar);
+                daoBitacora bitacora = new  daoBitacora();
+                bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Update");                
                 JOptionPane.showMessageDialog(null, "Contraseña modificada");
                 
             }catch(Exception ex){
