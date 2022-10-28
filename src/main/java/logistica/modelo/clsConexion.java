@@ -1,5 +1,6 @@
-package seguridad.modelo;
+package logistica.modelo;
 
+import seguridad.modelo.*;
 import java.sql.*;
 
 public class clsConexion {
