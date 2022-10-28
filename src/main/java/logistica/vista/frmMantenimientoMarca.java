@@ -23,9 +23,9 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
     public void llenadoDeCombos() {
         daoMarca marcaDAO = new daoMarca();
         List<clsMarca> marcas = marcaDAO.select();
-        cbox_aplicacion.addItem("Seleccione una opción");
+        cbox_marcas.addItem("Seleccione una opción");
         for (int i = 0; i < marcas.size(); i++) {
-            cbox_aplicacion.addItem(marcas.get(i).getNombre());
+            cbox_marcas.addItem(marcas.get(i).getNombre());
         }
     }
 
@@ -43,7 +43,7 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
         modelo.addColumn("Estado");
         daoMarca marcaDAO = new daoMarca();
         List<clsMarca> marcas = marcaDAO.select();
-        tablaAplicaciones.setModel(modelo);
+        tablaMarcas.setModel(modelo);
         String[] dato = new String[3];
         for (int i = 0; i < marcas.size(); i++) {
             dato[0] = Integer.toString(marcas.get(i).getcodigo());
@@ -91,8 +91,8 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAplicaciones = new javax.swing.JTable();
-        cbox_aplicacion = new javax.swing.JComboBox<>();
+        tablaMarcas = new javax.swing.JTable();
+        cbox_marcas = new javax.swing.JComboBox<>();
         label4 = new javax.swing.JLabel();
         label5 = new javax.swing.JLabel();
         lb = new javax.swing.JLabel();
@@ -106,7 +106,7 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Mantenimiento marcas");
+        setTitle("Mantenimiento Marcas");
         setVisible(true);
 
         btnEliminar.setText("Eliminar");
@@ -154,8 +154,8 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
             }
         });
 
-        tablaAplicaciones.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        tablaAplicaciones.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMarcas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        tablaMarcas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -171,17 +171,17 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tablaAplicaciones);
+        jScrollPane1.setViewportView(tablaMarcas);
 
-        cbox_aplicacion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbox_aplicacion.addActionListener(new java.awt.event.ActionListener() {
+        cbox_marcas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbox_marcas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbox_aplicacionActionPerformed(evt);
+                cbox_marcasActionPerformed(evt);
             }
         });
 
         label4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label4.setText("Aplicacion");
+        label4.setText("Marcas");
 
         label5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label5.setText("Estado");
@@ -239,10 +239,10 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
                         .addComponent(label4)
                         .addGap(46, 46, 46)
-                        .addComponent(cbox_aplicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbox_marcas, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
@@ -286,7 +286,7 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
                     .addComponent(jButton2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(label4)
-                        .addComponent(cbox_aplicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbox_marcas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -339,7 +339,7 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        cbox_aplicacion.setSelectedIndex(0);
+        cbox_marcas.setSelectedIndex(0);
         txtNombre.setText("");
         txtbuscado.setText("");
         cbox_estado.setSelectedIndex(0);
@@ -350,10 +350,10 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void cbox_aplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_aplicacionActionPerformed
+    private void cbox_marcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_marcasActionPerformed
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbox_aplicacionActionPerformed
+    }//GEN-LAST:event_cbox_marcasActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -383,8 +383,8 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<String> cbox_aplicacion;
     private javax.swing.JComboBox<String> cbox_estado;
+    private javax.swing.JComboBox<String> cbox_marcas;
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label1;
@@ -394,7 +394,7 @@ public class frmMantenimientoMarca extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lb;
     private javax.swing.JLabel lb2;
     private javax.swing.JLabel lbusu;
-    private javax.swing.JTable tablaAplicaciones;
+    private javax.swing.JTable tablaMarcas;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtbuscado;
     // End of variables declaration//GEN-END:variables
