@@ -7,8 +7,8 @@ package logistica.vista;
 
 
 
-import logistica.modelo.daoLinea;
-import logistica.controlador.clsLinea;
+import logistica.modelo.daoConcepto;
+import logistica.controlador.clsConcepto;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
@@ -17,16 +17,16 @@ import java.io.File;
  *
  * @author visitante
  */
-public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
+public class frmMantenimientoConcepto extends javax.swing.JInternalFrame {
 
-   
+    
     
     public void llenadoDeCombos() {
-        daoLinea lineaDAO = new daoLinea();
-        List<clsLinea> lineas = lineaDAO.select();
+        daoConcepto cDAO = new daoConcepto();
+        List<clsConcepto> c = cDAO.select();
         cbox_lineas.addItem("Seleccione una opción");
-        for (int i = 0; i < lineas.size(); i++) {
-            cbox_lineas.addItem(lineas.get(i).getNombrel());
+        for (int i = 0; i < c.size(); i++) {
+            cbox_lineas.addItem(c.get(i).getNombrec());
         }
     }
 
@@ -39,32 +39,32 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
     
     public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("ID Linea");
+        modelo.addColumn("ID Concepto");
         modelo.addColumn("Nombre");
         modelo.addColumn("Estado");
-        daoLinea lineaDAO = new daoLinea();
-        List<clsLinea> lineas = lineaDAO.select();
+        daoConcepto cDAO = new daoConcepto();
+        List<clsConcepto> c = cDAO.select();
         tablaLineas.setModel(modelo);
         String[] dato = new String[3];
-        for (int i = 0; i < lineas.size(); i++) {
-            dato[0] = Integer.toString(lineas.get(i).getcodigol());
-            dato[1] = lineas.get(i).getNombrel();
-            dato[2] = lineas.get(i).getestadol();
+        for (int i = 0; i < c.size(); i++) {
+            dato[0] = Integer.toString(c.get(i).getcodigoc());
+            dato[1] = c.get(i).getNombrec();
+            dato[2] = c.get(i).getestadoc();
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
     }
 
     public void buscaraplicacion() {
-        clsLinea lineaAConsultar = new clsLinea();
-        daoLinea lineaDAO = new daoLinea();
-        lineaAConsultar.setcodigol(Integer.parseInt(txtbuscado.getText()));
-        lineaAConsultar = lineaDAO.query(lineaAConsultar);
-        txtNombre.setText(lineaAConsultar.getNombrel());
-         cbox_estado.setSelectedItem(lineaAConsultar.getestadol());
+        clsConcepto cAConsultar = new clsConcepto();
+        daoConcepto cDAO = new daoConcepto();
+        cAConsultar.setcodigoc(Integer.parseInt(txtbuscado.getText()));
+        cAConsultar = cDAO.query(cAConsultar);
+        txtNombre.setText(cAConsultar.getNombrec());
+         cbox_estado.setSelectedItem(cAConsultar.getestadoc());
     }
 
-    public frmMantenimientoLinea() {
+    public frmMantenimientoConcepto() {
         initComponents();
         llenadoDeTablas();
         llenadoDeCombos();
@@ -107,7 +107,7 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Mantenimiento Lineas");
+        setTitle("Mantenimiento Conceptos");
         setVisible(true);
 
         btnEliminar.setText("Eliminar");
@@ -132,7 +132,7 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
         });
 
         label1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label1.setText("Lineas");
+        label1.setText("Conceptos");
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +161,7 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID Linea", "Nombre", "Estado"
+                "ID Concepto", "Nombre", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -182,7 +182,7 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
         });
 
         label4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label4.setText("Lineas");
+        label4.setText("Conceptos");
 
         label5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label5.setText("Estado");
@@ -236,17 +236,17 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
                             .addComponent(cbox_estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lb, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
                         .addComponent(label4)
                         .addGap(46, 46, 46)
                         .addComponent(cbox_lineas, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -296,20 +296,20 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        daoLinea lineaDAO = new daoLinea();
-        clsLinea lineaAEliminar = new clsLinea();
-        lineaAEliminar.setcodigol(Integer.parseInt(txtbuscado.getText()));
-        lineaDAO.delete(lineaAEliminar);
+        daoConcepto cDAO = new daoConcepto();
+        clsConcepto cAEliminar = new clsConcepto();
+        cAEliminar.setcodigoc(Integer.parseInt(txtbuscado.getText()));
+        cDAO.delete(cAEliminar);
        
         llenadoDeTablas();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        daoLinea lineaDAO = new daoLinea();
-        clsLinea lineaAInsertar = new clsLinea();
-        lineaAInsertar.setNombrel(txtNombre.getText());
-        lineaAInsertar.setestadol(cbox_estado.getSelectedItem().toString());
-        lineaDAO.insert(lineaAInsertar);
+        daoConcepto cDAO = new daoConcepto();
+        clsConcepto cAInsertar = new clsConcepto();
+        cAInsertar.setNombrec(txtNombre.getText());
+        cAInsertar.setestadoc(cbox_estado.getSelectedItem().toString());
+        cDAO.insert(cAInsertar);
         
         
         
@@ -325,12 +325,12 @@ public class frmMantenimientoLinea extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 //        // TODO add your handling code here:
-        daoLinea lineaDAO = new daoLinea();
-        clsLinea lineaAActualizar = new clsLinea();
-        lineaAActualizar.setcodigol(Integer.parseInt(txtbuscado.getText()));
-        lineaAActualizar.setNombrel(txtNombre.getText());
-        lineaAActualizar.setestadol(cbox_estado.getSelectedItem().toString());
-        lineaDAO.update(lineaAActualizar);
+        daoConcepto cDAO = new daoConcepto();
+        clsConcepto cAActualizar = new clsConcepto();
+        cAActualizar.setcodigoc(Integer.parseInt(txtbuscado.getText()));
+        cAActualizar.setNombrec(txtNombre.getText());
+        cAActualizar.setestadoc(cbox_estado.getSelectedItem().toString());
+        cDAO.update(cAActualizar);
      
         llenadoDeTablas();
     }//GEN-LAST:event_btnModificarActionPerformed
