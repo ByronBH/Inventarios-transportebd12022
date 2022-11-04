@@ -5,8 +5,8 @@
  */
 package logistica.modelo;
 
-import seguridad.modelo.clsConexion;
-import logistica.controlador.clsMarca;
+import seguridad.modelo.*;
+import logistica.controlador.clsConductor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,36 +18,36 @@ import java.util.List;
  *
  * @author visitante
  */
-public class daoMarca {
+public class daoConductor {
 
-    private static final String SQL_SELECT = "SELECT marcodigo, marnombre, marestatus FROM tbl_marcas";
-    private static final String SQL_INSERT = "INSERT INTO tbl_marcas(marnombre, marestatus) VALUES(?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_marcas SET marnombre=?, marestatus=? WHERE marcodigo = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_marcas WHERE marcodigo=?";
-    private static final String SQL_QUERY = "SELECT marcodigo, marnombre, marestatus FROM tbl_marcas WHERE marcodigo = ?";
+    private static final String SQL_SELECT = "SELECT condid, condnombre, condestatus FROM tbl_conductor";
+    private static final String SQL_INSERT = "INSERT INTO tbl_conductor(condnombre, condestatus) VALUES(?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_conductor SET condnombre=?, condestatus=? WHERE condid = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_conductor WHERE condid=?";
+    private static final String SQL_QUERY = "SELECT condid, condnombre, condestatus FROM tbl_conductor WHERE condid = ?";
 
-    public List<clsMarca> select() {
+    public List<clsConductor> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        clsMarca marca = null;
-        List<clsMarca> marcas = new ArrayList<clsMarca>();
+        clsConductor aplicacion = null;
+        List<clsConductor> aplicaciones = new ArrayList<clsConductor>();
 
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("marcodigo");
-                String nombre = rs.getString("marnombre");
-                String estado = rs.getString("marestatus");
+                int id_aplicacion = rs.getInt("condid");
+                String nombre = rs.getString("condnombre");
+                String estado = rs.getString("condestatus");
                 
-                marca = new clsMarca();
-                marca.setcodigo(codigo);
-                marca.setNombre(nombre);
-                marca.setestado(estado);
+                aplicacion = new clsConductor();
+                aplicacion.setId_Conductor(id_aplicacion);
+                aplicacion.setNombreConductor(nombre);
+                aplicacion.setestadoConductor(estado);
                 
-                marcas.add(marca);
+                aplicaciones.add(aplicacion);
             }
 
         } catch (SQLException ex) {
@@ -58,18 +58,18 @@ public class daoMarca {
             clsConexion.close(conn);
         }
 
-        return marcas;
+        return aplicaciones;
     }
 
-    public int insert(clsMarca marca) {
+    public int insert(clsConductor aplicacion) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, marca.getNombre());
-            stmt.setString(2, marca.getestado());
+            stmt.setString(1, aplicacion.getNombreConductor());
+            stmt.setString(2, aplicacion.getestadoConductor());
 
 
             System.out.println("ejecutando query:" + SQL_INSERT);
@@ -85,7 +85,7 @@ public class daoMarca {
         return rows;
     }
 
-    public int update(clsMarca marca) {
+    public int update(clsConductor aplicacion) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -94,9 +94,9 @@ public class daoMarca {
             conn = clsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, marca.getNombre());
-            stmt.setString(2, marca.getestado());
-            stmt.setInt(3, marca.getcodigo());
+            stmt.setString(1, aplicacion.getNombreConductor());
+            stmt.setString(2, aplicacion.getestadoConductor());
+            stmt.setInt(3, aplicacion.getId_Conductor());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -111,7 +111,7 @@ public class daoMarca {
         return rows;
     }
 
-    public int delete(clsMarca marca) {
+    public int delete(clsConductor aplicacion) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -120,7 +120,7 @@ public class daoMarca {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, marca.getcodigo());
+            stmt.setInt(1, aplicacion.getId_Conductor());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -134,28 +134,28 @@ public class daoMarca {
     }
 
 //    public List<Persona> query(Persona vendedor) { // Si se utiliza un ArrayList
-    public clsMarca query(clsMarca marca) {    
+    public clsConductor query(clsConductor aplicacion) {    
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<clsMarca> marcas = new ArrayList<clsMarca>();
+        List<clsConductor> aplicaciones = new ArrayList<clsConductor>();
         int rows = 0;
 
         try {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, marca.getcodigo());
+            stmt.setInt(1, aplicacion.getId_Conductor());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("marcodigo");
-                String nombre = rs.getString("marnombre");
-                String estado = rs.getString("marestatus");
+                int id_aplicacion = rs.getInt("condid");
+                String nombre = rs.getString("condnombre");
+                String estado = rs.getString("condestatus");
                 
-                marca = new clsMarca();
-                marca.setcodigo(codigo);
-                marca.setNombre(nombre);
-                marca.setestado(estado);
+                aplicacion = new clsConductor();
+                aplicacion.setId_Conductor(id_aplicacion);
+                aplicacion.setNombreConductor(nombre);
+                aplicacion.setestadoConductor(estado);
                 
                 //vendedores.add(vendedor); // Si se utiliza un ArrayList
             }
@@ -169,7 +169,7 @@ public class daoMarca {
         }
 
         //return vendedores;  // Si se utiliza un ArrayList
-        return marca;
+        return aplicacion;
     }
         
 }

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ventas.vista;
+package compras.vista;
 
 
-import ventas.modelo.daoCobradores;
-import ventas.controlador.clsCobradores;
+import compras.modelo.daoProveedores;
+import compras.controlador.clsProveedores;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
@@ -18,61 +18,61 @@ import java.io.File;
  *
  * @author visitante
  */
-public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
+public class frmMantenimientoProveedor extends javax.swing.JInternalFrame {
 
-    public void llenadoDeCombos() {
-        daoCobradores cobradorDAO = new daoCobradores();
-        List<clsCobradores> cobradores = cobradorDAO.select();
-        cbox_aplicacion.addItem("Seleccione una opción");
-        for (int i = 0; i < cobradores.size(); i++) {
-            cbox_aplicacion.addItem(String.valueOf(cobradores.get(i).fGetid_Cobradores()));
-        }
+        public void llenadoDeCombos() {
+        daoProveedores AplicacionDAO = new daoProveedores();
+        List<clsProveedores> aplicaciones = AplicacionDAO.select();
+        cbox_estado.addItem("Seleccione una opción");
     }
-
+    
+        public void estados() {    
+        cbox_estado.addItem("1");
+        cbox_estado.addItem("0");
+    }    
+    
     public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("ID Cobrador");
+        modelo.addColumn("Codigo Proveedor");
         modelo.addColumn("Nombre");
         modelo.addColumn("Direccion");
-        modelo.addColumn("Telefono");
-        modelo.addColumn("Correo");
-        modelo.addColumn("Estado");
-        modelo.addColumn("Tipo");
+       modelo.addColumn("Telefono");
+        modelo.addColumn("Nit");
+        modelo.addColumn("Estatus");
 
-        daoCobradores cobradorDAO = new daoCobradores();
-        List<clsCobradores> cobradores = cobradorDAO.select();
+        daoProveedores vendedorDAO = new daoProveedores();
+        List<clsProveedores> vendedores = vendedorDAO.select();
         tablaVendedores.setModel(modelo);
-        String[] dato = new String[7];
-        for (int i = 0; i < cobradores.size(); i++) {
-            dato[0] = Integer.toString(cobradores.get(i).fGetid_Cobradores());
-            dato[1] = cobradores.get(i).fGetnombre_Cobradores();
-            dato[2] = cobradores.get(i).fGetdireccion_Cobradores();
-            dato[3] = Integer.toString(cobradores.get(i).fGettelefono_Cobradores());
-            dato[4] =cobradores.get(i).fGetcorreo_Cobradores();
-            dato[5] = cobradores.get(i).fGetestado_Cobradores();
-            dato[6] = cobradores.get(i).fGettipo_Cobradores();
+        String[] dato = new String[6];
+        for (int i = 0; i < vendedores.size(); i++) {
+            dato[0] = Integer.toString(vendedores.get(i).getprocodigo());
+            dato[1] = vendedores.get(i).getpronombre();
+            dato[2] = vendedores.get(i).getprodireccion();
+            dato[3] = vendedores.get(i).getprotelefono();
+            dato[4] =vendedores.get(i).getpronit();
+            dato[5] = vendedores.get(i).getproestatus();
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
     }
 
-    public void buscarCobrador() {
-        clsCobradores cobradorAConsultar = new clsCobradores();
-        daoCobradores cobradorDAO = new daoCobradores();
-        cobradorAConsultar.fSetid_Cobradores(Integer.parseInt(txtbuscado.getText()));
-        cobradorAConsultar = cobradorDAO.query(cobradorAConsultar);
-        txtNombre.setText(cobradorAConsultar.fGetnombre_Cobradores());
-        txtDireccion.setText(cobradorAConsultar.fGetdireccion_Cobradores());
-        txtTelefono.setText(String.valueOf(cobradorAConsultar.fGettelefono_Cobradores()));
-        txtCorreo.setText(cobradorAConsultar.fGetcorreo_Cobradores());
-        txtEstado.setText(cobradorAConsultar.fGetestado_Cobradores());
-        txtTipo.setText(cobradorAConsultar.fGettipo_Cobradores());
+    public void buscarVendedor() {
+        clsProveedores vendedorAConsultar = new clsProveedores();
+        daoProveedores vendedorDAO = new daoProveedores();
+        vendedorAConsultar.setprocodigo(Integer.parseInt(txtbuscado.getText()));
+        vendedorAConsultar = vendedorDAO.query(vendedorAConsultar);
+        txtNombre.setText(vendedorAConsultar.getpronombre());
+        txtDireccion.setText(vendedorAConsultar.getprodireccion());
+        txtTelefono.setText(vendedorAConsultar.getprotelefono());
+        txtCorreo.setText(vendedorAConsultar.getpronit());
+         cbox_estado.setSelectedItem(vendedorAConsultar.getproestatus());
     }
 
-    public frmMantenimientoCobradores() {
+    public frmMantenimientoProveedor() {
         initComponents();
         llenadoDeTablas();
         llenadoDeCombos();
+        estados();
     }
 
     /**
@@ -95,8 +95,6 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         txtbuscado = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
-        cbox_aplicacion = new javax.swing.JComboBox<>();
-        label4 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         label5 = new javax.swing.JLabel();
         lb = new javax.swing.JLabel();
@@ -105,12 +103,11 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         txtCorreo = new javax.swing.JTextField();
         label6 = new javax.swing.JLabel();
         label7 = new javax.swing.JLabel();
-        txtEstado = new javax.swing.JTextField();
-        txtTipo = new javax.swing.JTextField();
-        label8 = new javax.swing.JLabel();
         label9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaVendedores = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        cbox_estado = new javax.swing.JComboBox<>();
 
         lb2.setForeground(new java.awt.Color(204, 204, 204));
         lb2.setText(".");
@@ -119,7 +116,7 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Mantenimiento Cobradores");
+        setTitle("Mantenimiento Proveedores");
         setVisible(true);
 
         btnEliminar.setText("Eliminar");
@@ -144,7 +141,7 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         });
 
         label1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label1.setText("Cobradores");
+        label1.setText("Proveedores");
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -156,15 +153,8 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         label3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label3.setText("Nombre");
 
-        txtbuscado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtbuscadoActionPerformed(evt);
-            }
-        });
-
         txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtNombre.setOpaque(false);
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -173,19 +163,8 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
             }
         });
 
-        cbox_aplicacion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbox_aplicacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbox_aplicacionActionPerformed(evt);
-            }
-        });
-
-        label4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label4.setText("Cobrador");
-
         txtDireccion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtDireccion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtDireccion.setOpaque(false);
 
         label5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label5.setText("Direccion");
@@ -202,28 +181,15 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
 
         txtTelefono.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtTelefono.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtTelefono.setOpaque(false);
 
         txtCorreo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtCorreo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtCorreo.setOpaque(false);
 
         label6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label6.setText("Correo");
+        label6.setText("Nit");
 
         label7.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label7.setText("Telefono");
-
-        txtEstado.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtEstado.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtEstado.setOpaque(false);
-
-        txtTipo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtTipo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtTipo.setOpaque(false);
-
-        label8.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label8.setText("Tipo");
 
         label9.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label9.setText("Estado");
@@ -248,62 +214,78 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tablaVendedores);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 3, 12)); // NOI18N
+        jLabel1.setText("1 = Habilitado y 0 = Inhabilitado");
+
+        cbox_estado.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbox_estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbox_estadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label6)
-                    .addComponent(label3)
-                    .addComponent(label7)
-                    .addComponent(label8)
-                    .addComponent(label9)
-                    .addComponent(label5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCorreo)
-                    .addComponent(txtNombre)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo)
-                    .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lb, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtbuscado, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label3)
+                            .addComponent(label5))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(304, 304, 304)
+                                .addComponent(lb, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label7)
+                            .addComponent(label6)
+                            .addComponent(label9))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtTelefono)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbox_estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 283, Short.MAX_VALUE)
                         .addComponent(label1)
                         .addGap(294, 294, 294))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE))
                         .addGap(30, 30, 30))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(135, 135, 135)
-                .addComponent(label4)
-                .addGap(46, 46, 46)
-                .addComponent(cbox_aplicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtbuscado, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(687, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,23 +295,20 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(label4)
-                            .addComponent(cbox_aplicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
-                        .addGap(0, 21, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(45, 45, 45)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label3))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label3)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label5)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label5)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(lb))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,12 +320,10 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
                             .addComponent(label6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label9))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label8))
+                            .addComponent(label9)
+                            .addComponent(cbox_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegistrar)
@@ -365,54 +342,50 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        daoCobradores cobradorDAO = new daoCobradores();
-        clsCobradores cobradorAEliminar = new clsCobradores();
-       cobradorAEliminar.fSetid_Cobradores(Integer.parseInt(txtbuscado.getText()));
-        cobradorDAO.delete(cobradorAEliminar);
+        daoProveedores vendedorDAO = new daoProveedores();
+        clsProveedores vendedorAEliminar = new clsProveedores();
+        vendedorAEliminar.setprocodigo(Integer.parseInt(txtbuscado.getText()));
+        vendedorDAO.delete(vendedorAEliminar);
         llenadoDeTablas();        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        daoCobradores cobradorDAO = new daoCobradores();
-        clsCobradores cobradorAInsertar = new clsCobradores();
-        cobradorAInsertar.fSetnombre_Cobradores(txtNombre.getText());
-        cobradorAInsertar.fSetdireccion_Cobradores(txtDireccion.getText());
-        cobradorAInsertar.fSettelefono_Cobradores(Integer.parseInt(txtTelefono.getText()));
-        cobradorAInsertar.fSetcorreo_Cobradores(txtCorreo.getText());
-        cobradorAInsertar.fSetestado_Cobradores(txtDireccion.getText());
-        cobradorAInsertar.fSettipo_Cobradores(txtTipo.getText());
-        cobradorDAO.insert(cobradorAInsertar);
+        daoProveedores vendedorDAO = new daoProveedores();
+        clsProveedores vendedorAInsertar = new clsProveedores();
+        vendedorAInsertar.setpronombre(txtNombre.getText());
+        vendedorAInsertar.setprodireccion(txtDireccion.getText());
+        vendedorAInsertar.setprotelefono(txtTelefono.getText());
+        vendedorAInsertar.setpronit(txtCorreo.getText());
+        vendedorAInsertar.setproestatus(cbox_estado.getSelectedItem().toString());
+        vendedorDAO.insert(vendedorAInsertar);
         llenadoDeTablas();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        buscarCobrador();
+        buscarVendedor();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        daoCobradores cobradorDAO = new daoCobradores();
-        clsCobradores cobradorAActualizar = new clsCobradores();
-        cobradorAActualizar.fSetid_Cobradores(Integer.parseInt(txtbuscado.getText()));
-        cobradorAActualizar.fSetnombre_Cobradores(txtNombre.getText());
-        cobradorAActualizar.fSetdireccion_Cobradores(txtDireccion.getText());
-        cobradorAActualizar.fSettelefono_Cobradores(Integer.parseInt(txtTelefono.getText()));
-        cobradorAActualizar.fSetcorreo_Cobradores(txtCorreo.getText());
-        cobradorAActualizar.fSetestado_Cobradores(txtDireccion.getText());
-        cobradorAActualizar.fSettipo_Cobradores(txtTipo.getText());
-        cobradorDAO.update(cobradorAActualizar);
+        daoProveedores vendedorDAO = new daoProveedores();
+        clsProveedores vendedorAActualizar = new clsProveedores();
+        vendedorAActualizar.setprocodigo(Integer.parseInt(txtbuscado.getText()));
+        vendedorAActualizar.setpronombre(txtNombre.getText());
+        vendedorAActualizar.setprodireccion(txtDireccion.getText());
+        vendedorAActualizar.setprotelefono(txtTelefono.getText());
+        vendedorAActualizar.setpronit(txtCorreo.getText());
+        vendedorAActualizar.setproestatus(cbox_estado.getSelectedItem().toString());
+        vendedorDAO.update(vendedorAActualizar);
         llenadoDeTablas();        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        cbox_aplicacion.setSelectedIndex(0);
         txtNombre.setText("");
         txtDireccion.setText("");
         txtTelefono.setText("");
         txtCorreo.setText("");
-        txtEstado.setText("");
-        txtTipo.setText("");
+        cbox_estado.setSelectedIndex(0);
         txtbuscado.setText("");
         btnRegistrar.setEnabled(true);
         btnModificar.setEnabled(true);
@@ -420,11 +393,6 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void cbox_aplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_aplicacionActionPerformed
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbox_aplicacionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -443,9 +411,9 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void txtbuscadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbuscadoActionPerformed
+    private void cbox_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_estadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtbuscadoActionPerformed
+    }//GEN-LAST:event_cbox_estadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -454,16 +422,15 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<String> cbox_aplicacion;
+    private javax.swing.JComboBox<String> cbox_estado;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label3;
-    private javax.swing.JLabel label4;
     private javax.swing.JLabel label5;
     private javax.swing.JLabel label6;
     private javax.swing.JLabel label7;
-    private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
     private javax.swing.JLabel lb;
     private javax.swing.JLabel lb2;
@@ -471,10 +438,8 @@ public class frmMantenimientoCobradores extends javax.swing.JInternalFrame {
     private javax.swing.JTable tablaVendedores;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTipo;
     private javax.swing.JTextField txtbuscado;
     // End of variables declaration//GEN-END:variables
 }

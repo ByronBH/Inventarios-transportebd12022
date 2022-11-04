@@ -5,7 +5,7 @@
  */
 package logistica.modelo;
 
-
+import seguridad.modelo.clsConexion;
 import logistica.controlador.clsConcepto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,11 +20,11 @@ import java.util.List;
  */
 public class daoConcepto {
 
-    private static final String SQL_SELECT = "SELECT concodigo, connombre, conestatus FROM tbl_conceptos";
+    private static final String SQL_SELECT = "SELECT conid, connombre, conestatus FROM tbl_conceptos";
     private static final String SQL_INSERT = "INSERT INTO tbl_conceptos(connombre, conestatus) VALUES(?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_conceptos SET connombre=?, conestatus=? WHERE concodigo = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_conceptos WHERE concodigo=?";
-    private static final String SQL_QUERY = "SELECT concodigo, connombre, conestatus FROM tbl_conceptos WHERE concodigo = ?";
+    private static final String SQL_UPDATE = "UPDATE tbl_conceptos SET connombre=?, conestatus=? WHERE conid = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_conceptos WHERE conid=?";
+    private static final String SQL_QUERY = "SELECT conid, connombre, conestatus FROM tbl_conceptos WHERE conid = ?";
 
     public List<clsConcepto> select() {
         Connection conn = null;
@@ -38,7 +38,7 @@ public class daoConcepto {
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("concodigo");
+                int codigo = rs.getInt("conid");
                 String nombre = rs.getString("connombre");
                 String estado = rs.getString("conestatus");
                 
@@ -148,7 +148,7 @@ public class daoConcepto {
             stmt.setInt(1, concepto.getcodigoc());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("concodigo");
+                int codigo = rs.getInt("conid");
                 String nombre = rs.getString("connombre");
                 String estado = rs.getString("conestatus");
                 

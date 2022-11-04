@@ -20,11 +20,11 @@ import seguridad.modelo.clsConexion;
  */
 public class daoVendedores {
 
-    private static final String SQL_SELECT = "SELECT Id_vendedor, Nombre, Direccion, Telefono, Correo, Estado, Tipo FROM tbl_vendedores";
-    private static final String SQL_INSERT = "INSERT INTO tbl_vendedores(Nombre, Direccion, Telefono, Correo, Estado, Tipo) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_vendedores SET Nombre=?, Direccion=?, Telefono=?, Correo=?, Estado=?, AND Tipo=? WHERE Id_vendedor = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_vendedores WHERE Id_vendedor=?";
-    private static final String SQL_QUERY = "SELECT Id_vendedor, Nombre, Direccion, Telefono, Correo, Estado, Tipo FROM tbl_vendedores WHERE Id_vendedor = ?";
+    private static final String SQL_SELECT = "SELECT vedcodigo, vednombre, veddireccion, vedtelefono, vednit, vedestatus FROM tbl_vendedores";
+    private static final String SQL_INSERT = "INSERT INTO tbl_vendedores(vednombre, veddireccion, vedtelefono, vednit, vedestatus) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_vendedores SET vednombre=?, veddireccion=?, vedtelefono=?, vednit=?, vedestatus=? WHERE vedcodigo = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_vendedores WHERE vedcodigo=?";
+    private static final String SQL_QUERY = "SELECT vedcodigo, vednombre, veddireccion, vedtelefono, vednit, vedestatus FROM tbl_vendedores WHERE vedcodigo = ?";
 
 
     public List<clsVendedores> select() {
@@ -39,22 +39,22 @@ public class daoVendedores {
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int iId_vendedor = rs.getInt("Id_vendedor");
-                String sNombre = rs.getString("Nombre");
-                String sDireccion = rs.getString("Direccion");
-                int iTelefono = rs.getInt("Telefono");
-                String sCorreo = rs.getString("Correo");
-                String sEstado = rs.getString("Estado");
-                String sTipo = rs.getString("Tipo");
+                int vedcodigo = rs.getInt("vedcodigo");
+                String vednombre = rs.getString("vednombre");
+                String veddireccion = rs.getString("veddireccion");
+                String vedtelefono = rs.getString("vedtelefono");
+                String vednit = rs.getString("vednit");
+                String vedestatus = rs.getString("vedestatus");
+
 
                 vendedor = new clsVendedores();
-                vendedor.fSetid_Vendedores(iId_vendedor);
-                vendedor.fSetnombre_Vendedores(sNombre);
-                vendedor.fSetdireccion_Vendedores(sDireccion);
-                vendedor.fSettelefono_Vendedores(iTelefono);
-                vendedor.fSetcorreo_Vendedores(sCorreo);
-                vendedor.fSetestado_Vendedores(sEstado);
-                vendedor.fSettipo_Vendedores(sTipo);
+                vendedor.Setvedcodigo(vedcodigo);
+                vendedor.Setvednombre(vednombre);
+                vendedor.Setveddireccion(veddireccion);
+                vendedor.Setvedtelefono(vedtelefono);
+                vendedor.Setvednit(vednit);
+                vendedor.Setvedestatus(vedestatus);
+
                 
                 vendedores.add(vendedor);
             }
@@ -77,12 +77,12 @@ public class daoVendedores {
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, vendedor.fGetnombre_Vendedores());
-            stmt.setString(2, vendedor.fGetdireccion_Vendedores());
-            stmt.setInt(3, vendedor.fGettelefono_Vendedores());
-            stmt.setString(4, vendedor.fGetcorreo_Vendedores());
-            stmt.setString(5, vendedor.fGetestado_Vendedores());
-            stmt.setString(6, vendedor.fGettipo_Vendedores());
+            stmt.setString(1, vendedor.Getvednombre());
+            stmt.setString(2, vendedor.Getveddireccion());
+            stmt.setString(3, vendedor.Getvedtelefono());
+            stmt.setString(4, vendedor.Getvednit());
+            stmt.setString(5, vendedor.Getvedestatus());
+
 
 
             System.out.println("ejecutando query:" + SQL_INSERT);
@@ -107,12 +107,12 @@ public class daoVendedores {
             conn = clsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, vendedor.fGetnombre_Vendedores());
-            stmt.setString(2, vendedor.fGetdireccion_Vendedores());
-            stmt.setInt(3, vendedor.fGettelefono_Vendedores());
-            stmt.setString(4, vendedor.fGetcorreo_Vendedores());
-            stmt.setString(5, vendedor.fGetestado_Vendedores());
-            stmt.setString(6, vendedor.fGettipo_Vendedores());
+            stmt.setString(1, vendedor.Getvednombre());
+            stmt.setString(2, vendedor.Getveddireccion());
+            stmt.setString(3, vendedor.Getvedtelefono());
+            stmt.setString(4, vendedor.Getvednit());
+            stmt.setString(5, vendedor.Getvedestatus());
+            stmt.setInt(6, vendedor.Getvedcodigo());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -136,7 +136,7 @@ public class daoVendedores {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, vendedor.fGetid_Vendedores());
+            stmt.setInt(1, vendedor.Getvedcodigo());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -161,25 +161,23 @@ public class daoVendedores {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, vendedor.fGetid_Vendedores());
+            stmt.setInt(1, vendedor.Getvedcodigo());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int iId_vendedor = rs.getInt("Id_vendedor");
-                String sNombre = rs.getString("Nombre");
-                String sDireccion = rs.getString("Direccion");
-                int iTelefono = rs.getInt("Telefono");
-                String sCorreo = rs.getString("Correo");
-                String sEstado = rs.getString("Estado");
-                String sTipo = rs.getString("Tipo");
+                int vedcodigo = rs.getInt("vedcodigo");
+                String vednombre = rs.getString("vednombre");
+                String veddireccion = rs.getString("veddireccion");
+                String vedtelefono = rs.getString("vedtelefono");
+                String vednit = rs.getString("vednit");
+                String vedestatus = rs.getString("vedestatus");
                 
                 vendedor = new clsVendedores();
-                vendedor.fSetid_Vendedores(iId_vendedor);
-                vendedor.fSetnombre_Vendedores(sNombre);
-                vendedor.fSetdireccion_Vendedores(sDireccion);
-                vendedor.fSettelefono_Vendedores(iTelefono);
-                vendedor.fSetcorreo_Vendedores(sCorreo);
-                vendedor.fSetestado_Vendedores(sEstado);
-                vendedor.fSettipo_Vendedores(sTipo);
+                vendedor.Setvedcodigo(vedcodigo);
+                vendedor.Setvednombre(vednombre);
+                vendedor.Setveddireccion(veddireccion);
+                vendedor.Setvedtelefono(vedtelefono);
+                vendedor.Setvednit(vednit);
+                vendedor.Setvedestatus(vedestatus);
                 
                 //vendedores.add(vendedor); // Si se utiliza un ArrayList
             }

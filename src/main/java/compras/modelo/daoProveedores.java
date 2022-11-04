@@ -3,51 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logistica.modelo;
+package compras.modelo;
 
-import seguridad.modelo.clsConexion;
-import logistica.controlador.clsMarca;
+import compras.controlador.clsProveedores;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import seguridad.modelo.clsConexion;
 
 /**
  *
  * @author visitante
  */
-public class daoMarca {
+public class daoProveedores {
 
-    private static final String SQL_SELECT = "SELECT marcodigo, marnombre, marestatus FROM tbl_marcas";
-    private static final String SQL_INSERT = "INSERT INTO tbl_marcas(marnombre, marestatus) VALUES(?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_marcas SET marnombre=?, marestatus=? WHERE marcodigo = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_marcas WHERE marcodigo=?";
-    private static final String SQL_QUERY = "SELECT marcodigo, marnombre, marestatus FROM tbl_marcas WHERE marcodigo = ?";
+    private static final String SQL_SELECT = "SELECT procodigo, pronombre, prodireccion, protelefono, pronit, proestatus FROM tbl_proveedores";
+    private static final String SQL_INSERT = "INSERT INTO tbl_proveedores(pronombre, prodireccion, protelefono, pronit, proestatus) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_proveedores SET pronombre=?, prodireccion=?, protelefono=?, pronit=?, proestatus=? WHERE procodigo = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_proveedores WHERE procodigo=?";
+    private static final String SQL_QUERY = "SELECT procodigo, pronombre, prodireccion, protelefono, pronit, proestatus FROM tbl_proveedores WHERE procodigo = ?";
 
-    public List<clsMarca> select() {
+
+    public List<clsProveedores> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        clsMarca marca = null;
-        List<clsMarca> marcas = new ArrayList<clsMarca>();
+        clsProveedores vendedor = null;
+        List<clsProveedores> vendedores = new ArrayList<clsProveedores>();
 
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("marcodigo");
-                String nombre = rs.getString("marnombre");
-                String estado = rs.getString("marestatus");
+                int procodigo = rs.getInt("procodigo");
+                String pronombre = rs.getString("pronombre");
+                String prodireccion = rs.getString("prodireccion");
+                String protelefono = rs.getString("protelefono");
+                String pronit = rs.getString("pronit");
+                String proestatus = rs.getString("proestatus");
+
+
+                vendedor = new clsProveedores();
+                vendedor.setprocodigo(procodigo);
+                vendedor.setpronombre(pronombre);
+                vendedor.setprodireccion(prodireccion);
+                vendedor.setprotelefono(protelefono);
+                vendedor.setpronit(pronit);
+                vendedor.setproestatus(proestatus);
+
                 
-                marca = new clsMarca();
-                marca.setcodigo(codigo);
-                marca.setNombre(nombre);
-                marca.setestado(estado);
-                
-                marcas.add(marca);
+                vendedores.add(vendedor);
             }
 
         } catch (SQLException ex) {
@@ -58,18 +67,22 @@ public class daoMarca {
             clsConexion.close(conn);
         }
 
-        return marcas;
+        return vendedores;
     }
 
-    public int insert(clsMarca marca) {
+    public int insert(clsProveedores vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, marca.getNombre());
-            stmt.setString(2, marca.getestado());
+            stmt.setString(1, vendedor.getpronombre());
+            stmt.setString(2, vendedor.getprodireccion());
+            stmt.setString(3, vendedor.getprotelefono());
+            stmt.setString(4, vendedor.getpronit());
+            stmt.setString(5, vendedor.getproestatus());
+
 
 
             System.out.println("ejecutando query:" + SQL_INSERT);
@@ -85,7 +98,7 @@ public class daoMarca {
         return rows;
     }
 
-    public int update(clsMarca marca) {
+    public int update(clsProveedores vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -94,9 +107,12 @@ public class daoMarca {
             conn = clsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, marca.getNombre());
-            stmt.setString(2, marca.getestado());
-            stmt.setInt(3, marca.getcodigo());
+            stmt.setString(1, vendedor.getpronombre());
+            stmt.setString(2, vendedor.getprodireccion());
+            stmt.setString(3, vendedor.getprotelefono());
+            stmt.setString(4, vendedor.getpronit());
+            stmt.setString(5, vendedor.getproestatus());
+            stmt.setInt(6, vendedor.getprocodigo());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -111,7 +127,7 @@ public class daoMarca {
         return rows;
     }
 
-    public int delete(clsMarca marca) {
+    public int delete(clsProveedores vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -120,7 +136,7 @@ public class daoMarca {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, marca.getcodigo());
+            stmt.setInt(1, vendedor.getprocodigo());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -134,28 +150,34 @@ public class daoMarca {
     }
 
 //    public List<Persona> query(Persona vendedor) { // Si se utiliza un ArrayList
-    public clsMarca query(clsMarca marca) {    
+    public clsProveedores query(clsProveedores vendedor) {    
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<clsMarca> marcas = new ArrayList<clsMarca>();
+        List<clsProveedores> vendedores = new ArrayList<clsProveedores>();
         int rows = 0;
 
         try {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, marca.getcodigo());
+            stmt.setInt(1, vendedor.getprocodigo());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("marcodigo");
-                String nombre = rs.getString("marnombre");
-                String estado = rs.getString("marestatus");
+                int procodigo = rs.getInt("procodigo");
+                String pronombre = rs.getString("pronombre");
+                String prodireccion = rs.getString("prodireccion");
+                String protelefono = rs.getString("protelefono");
+                String pronit = rs.getString("pronit");
+                String proestatus = rs.getString("proestatus");
                 
-                marca = new clsMarca();
-                marca.setcodigo(codigo);
-                marca.setNombre(nombre);
-                marca.setestado(estado);
+                vendedor = new clsProveedores();
+                vendedor.setprocodigo(procodigo);
+                vendedor.setpronombre(pronombre);
+                vendedor.setprodireccion(prodireccion);
+                vendedor.setprotelefono(protelefono);
+                vendedor.setpronit(pronit);
+                vendedor.setproestatus(proestatus);
                 
                 //vendedores.add(vendedor); // Si se utiliza un ArrayList
             }
@@ -169,7 +191,7 @@ public class daoMarca {
         }
 
         //return vendedores;  // Si se utiliza un ArrayList
-        return marca;
+        return vendedor;
     }
-        
+   
 }

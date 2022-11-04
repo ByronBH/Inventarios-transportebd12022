@@ -5,7 +5,7 @@
  */
 package ventas.modelo;
 
-import ventas.controlador.clsTipo_de_documentos;
+import ventas.controlador.clsCliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,42 +18,43 @@ import seguridad.modelo.clsConexion;
  *
  * @author visitante
  */
-public class daoTipo_de_documentos {
+public class daoCliente {
 
-    private static final String SQL_SELECT = "SELECT Id_documento, Material, Tipo, Vista, Uso FROM tbl_tipo_de_documentos";
-    private static final String SQL_INSERT = "INSERT INTO tbl_tipo_de_documentos(Material, Tipo, Vista, Uso) VALUES(?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_tipo_de_documentos SET Material=?, Tipo=?, Vista=?, Uso=? WHERE Id_documento = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_tipo_de_documentos WHERE Id_documento=?";
-    private static final String SQL_QUERY = "SELECT Id_documento, Material, Tipo, Vista, Uso FROM tbl_tipo_de_documentos WHERE Id_documento = ?";
+    private static final String SQL_SELECT = "SELECT clicodigo, clinombre, clidireccion, clinit, clitelefono, cliestatus FROM tbl_clientes";
+    private static final String SQL_INSERT = "INSERT INTO tbl_clientes(clinombre, clidireccion, clinit, clitelefono, cliestatus) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_clientes SET clinombre=?, clidireccion=?, clinit=?, clitelefono=?, cliestatus=? WHERE clicodigo = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_clientes WHERE clicodigo=?";
+    private static final String SQL_QUERY = "SELECT clicodigo, clinombre, clidireccion, clinit, clitelefono, cliestatus FROM tbl_clientes WHERE clicodigo = ?";
 
 
-    public List<clsTipo_de_documentos> select() {
+    public List<clsCliente> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        clsTipo_de_documentos documento = null;
-        List<clsTipo_de_documentos> documentos = new ArrayList<clsTipo_de_documentos>();
+        clsCliente cliente = null;
+        List<clsCliente> clientes = new ArrayList<clsCliente>();
 
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int iId_documento = rs.getInt("Id_documento");
-                String sMaterial = rs.getString("Material");
-                String sTipo = rs.getString("Tipo");
-                String sVista = rs.getString("Vista");
-                String sUso = rs.getString("Uso");
+                int codigo = rs.getInt("clicodigo");
+                String nombre = rs.getString("clinombre");
+                String direccion = rs.getString("clidireccion");
+                String nit = rs.getString("clinit");
+                String telefono = rs.getString("clitelefono");
+                String estatus = rs.getString("cliestatus");
 
-                documento = new clsTipo_de_documentos();
-                documento.fSetid_Documentos(iId_documento);
-                documento.fSetmaterial_Documentos(sMaterial);
-                documento.fSettipo_Documentos(sTipo);
-                documento.fSetvista_Documentos(sVista);
-                documento.fSetuso_Documentos(sUso);
-
+                cliente = new clsCliente();
+                cliente.setClicodigo(codigo);
+                cliente.setClinombre(nombre);
+                cliente.setClidireccion(direccion);
+                cliente.setClinit(nit);
+                cliente.setClitelefono(telefono);
+                cliente.setCliestatus(estatus);
                 
-                documentos.add(documento);
+                clientes.add(cliente);
             }
 
         } catch (SQLException ex) {
@@ -64,21 +65,21 @@ public class daoTipo_de_documentos {
             clsConexion.close(conn);
         }
 
-        return documentos;
+        return clientes;
     }
 
-    public int insert(clsTipo_de_documentos documento) {
+    public int insert(clsCliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, documento.fGetmaterial_Documentos());
-            stmt.setString(2, documento.fGettipo_Documentos());
-            stmt.setString(3, documento.fGetvista_Documentos());
-            stmt.setString(4, documento.fGetuso_Documentos());
-
+            stmt.setString(1, cliente.getClinombre());
+            stmt.setString(2, cliente.getClidireccion());
+            stmt.setString(3, cliente.getClinit());
+            stmt.setString(4, cliente.getClitelefono());
+            stmt.setString(5, cliente.getCliestatus());      
 
             System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -93,7 +94,7 @@ public class daoTipo_de_documentos {
         return rows;
     }
 
-    public int update(clsTipo_de_documentos documento) {
+    public int update(clsCliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -102,10 +103,12 @@ public class daoTipo_de_documentos {
             conn = clsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, documento.fGetmaterial_Documentos());
-            stmt.setString(2, documento.fGettipo_Documentos());
-            stmt.setString(3, documento.fGetvista_Documentos());
-            stmt.setString(4, documento.fGetuso_Documentos());
+            stmt.setString(1, cliente.getClinombre());
+            stmt.setString(2, cliente.getClidireccion());
+            stmt.setString(3, cliente.getClinit());
+            stmt.setString(4, cliente.getClitelefono());
+            stmt.setString(5, cliente.getCliestatus());
+            stmt.setInt(6, cliente.getClicodigo());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -120,7 +123,7 @@ public class daoTipo_de_documentos {
         return rows;
     }
 
-    public int delete(clsTipo_de_documentos documento) {
+    public int delete(clsCliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -129,7 +132,7 @@ public class daoTipo_de_documentos {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, documento.fGetid_Documentos());
+            stmt.setInt(1, cliente.getClicodigo());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -143,32 +146,34 @@ public class daoTipo_de_documentos {
     }
 
 //    public List<Persona> query(Persona vendedor) { // Si se utiliza un ArrayList
-    public clsTipo_de_documentos query(clsTipo_de_documentos documento) {    
+    public clsCliente query(clsCliente cliente) {    
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<clsTipo_de_documentos> vendedores = new ArrayList<clsTipo_de_documentos>();
+        List<clsCliente> clientes = new ArrayList<clsCliente>();
         int rows = 0;
 
         try {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, documento.fGetid_Documentos());
+            stmt.setInt(1, cliente.getClicodigo());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int iId_documento = rs.getInt("Id_documento");
-                String sMaterial = rs.getString("Material");
-                String sTipo = rs.getString("Tipo");
-                String sVista = rs.getString("Vista");
-                String sUso = rs.getString("Uso");
-
-                documento = new clsTipo_de_documentos();
-                documento.fSetid_Documentos(iId_documento);
-                documento.fSetmaterial_Documentos(sMaterial);
-                documento.fSettipo_Documentos(sTipo);
-                documento.fSetvista_Documentos(sVista);
-                documento.fSetuso_Documentos(sUso);
+                int codigo = rs.getInt("clicodigo");
+                String nombre = rs.getString("clinombre");
+                String direccion = rs.getString("clidireccion");
+                String nit = rs.getString("clinit");
+                String telefono = rs.getString("clitelefono");
+                String estatus = rs.getString("cliestatus");
+                
+                cliente = new clsCliente();
+                cliente.setClicodigo(codigo);
+                cliente.setClinombre(nombre);
+                cliente.setClidireccion(direccion);
+                cliente.setClinit(nit);
+                cliente.setClitelefono(telefono);
+                cliente.setCliestatus(estatus);
                 
                 //vendedores.add(vendedor); // Si se utiliza un ArrayList
             }
@@ -182,7 +187,7 @@ public class daoTipo_de_documentos {
         }
 
         //return vendedores;  // Si se utiliza un ArrayList
-        return documento;
+        return cliente;
     }
    
 }

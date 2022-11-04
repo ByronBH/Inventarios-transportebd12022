@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ventas.modelo;
+package compras.modelo;
 
-import ventas.controlador.clsCobradores;
+import ventas.controlador.clsVendedores;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,28 +18,28 @@ import seguridad.modelo.clsConexion;
  *
  * @author visitante
  */
-public class daoCobradores {
+public class daoCompradores {
 
-    private static final String SQL_SELECT = "SELECT Id_cobrador, Nombre, Direccion, Telefono, Correo, Estado, Tipo FROM tbl_cobradores";
-    private static final String SQL_INSERT = "INSERT INTO tbl_cobradores(Nombre, Direccion, Telefono, Correo, Estado, Tipo) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_cobradores SET Nombre=?, Direccion=?, Telefono=?, Correo=?, Estado=?, AND Tipo=? WHERE Id_cobrador = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_cobradores WHERE Id_cobrador=?";
-    private static final String SQL_QUERY = "SELECT Id_cobrador, Nombre, Direccion, Telefono, Correo, Estado, Tipo FROM tbl_cobradores WHERE Id_cobrador = ?";
+    private static final String SQL_SELECT = "SELECT Id_vendedor, Nombre, Direccion, Telefono, Correo, Estado, Tipo FROM tbl_vendedores";
+    private static final String SQL_INSERT = "INSERT INTO tbl_vendedores(Nombre, Direccion, Telefono, Correo, Estado, Tipo) VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_vendedores SET Nombre=?, Direccion=?, Telefono=?, Correo=?, Estado=?, AND Tipo=? WHERE Id_vendedor = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_vendedores WHERE Id_vendedor=?";
+    private static final String SQL_QUERY = "SELECT Id_vendedor, Nombre, Direccion, Telefono, Correo, Estado, Tipo FROM tbl_vendedores WHERE Id_vendedor = ?";
 
 
-    public List<clsCobradores> select() {
+    public List<clsVendedores> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        clsCobradores cobrador = null;
-        List<clsCobradores> cobradores = new ArrayList<clsCobradores>();
+        clsVendedores vendedor = null;
+        List<clsVendedores> vendedores = new ArrayList<clsVendedores>();
 
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int iId_cobrador = rs.getInt("Id_cobrador");
+                int iId_vendedor = rs.getInt("Id_vendedor");
                 String sNombre = rs.getString("Nombre");
                 String sDireccion = rs.getString("Direccion");
                 int iTelefono = rs.getInt("Telefono");
@@ -47,16 +47,16 @@ public class daoCobradores {
                 String sEstado = rs.getString("Estado");
                 String sTipo = rs.getString("Tipo");
 
-                cobrador = new clsCobradores();
-                cobrador.fSetid_Cobradores(iId_cobrador);
-                cobrador.fSetnombre_Cobradores(sNombre);
-                cobrador.fSetdireccion_Cobradores(sDireccion);
-                cobrador.fSettelefono_Cobradores(iTelefono);
-                cobrador.fSetcorreo_Cobradores(sCorreo);
-                cobrador.fSetestado_Cobradores(sEstado);
-                cobrador.fSettipo_Cobradores(sTipo);
+                vendedor = new clsVendedores();
+                vendedor.fSetid_Vendedores(iId_vendedor);
+                vendedor.fSetnombre_Vendedores(sNombre);
+                vendedor.fSetdireccion_Vendedores(sDireccion);
+                vendedor.fSettelefono_Vendedores(iTelefono);
+                vendedor.fSetcorreo_Vendedores(sCorreo);
+                vendedor.fSetestado_Vendedores(sEstado);
+                vendedor.fSettipo_Vendedores(sTipo);
                 
-                cobradores.add(cobrador);
+                vendedores.add(vendedor);
             }
 
         } catch (SQLException ex) {
@@ -67,22 +67,22 @@ public class daoCobradores {
             clsConexion.close(conn);
         }
 
-        return cobradores;
+        return vendedores;
     }
 
-    public int insert(clsCobradores cobrador) {
+    public int insert(clsVendedores vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, cobrador.fGetnombre_Cobradores());
-            stmt.setString(2, cobrador.fGetdireccion_Cobradores());
-            stmt.setInt(3, cobrador.fGettelefono_Cobradores());
-            stmt.setString(4, cobrador.fGetcorreo_Cobradores());
-            stmt.setString(5, cobrador.fGetestado_Cobradores());
-            stmt.setString(6, cobrador.fGettipo_Cobradores());
+            stmt.setString(1, vendedor.fGetnombre_Vendedores());
+            stmt.setString(2, vendedor.fGetdireccion_Vendedores());
+            stmt.setInt(3, vendedor.fGettelefono_Vendedores());
+            stmt.setString(4, vendedor.fGetcorreo_Vendedores());
+            stmt.setString(5, vendedor.fGetestado_Vendedores());
+            stmt.setString(6, vendedor.fGettipo_Vendedores());
 
 
             System.out.println("ejecutando query:" + SQL_INSERT);
@@ -98,7 +98,7 @@ public class daoCobradores {
         return rows;
     }
 
-    public int update(clsCobradores cobrador) {
+    public int update(clsVendedores vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -107,12 +107,12 @@ public class daoCobradores {
             conn = clsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, cobrador.fGetnombre_Cobradores());
-            stmt.setString(2, cobrador.fGetdireccion_Cobradores());
-            stmt.setInt(3, cobrador.fGettelefono_Cobradores());
-            stmt.setString(4, cobrador.fGetcorreo_Cobradores());
-            stmt.setString(5, cobrador.fGetestado_Cobradores());
-            stmt.setString(6, cobrador.fGettipo_Cobradores());
+            stmt.setString(1, vendedor.fGetnombre_Vendedores());
+            stmt.setString(2, vendedor.fGetdireccion_Vendedores());
+            stmt.setInt(3, vendedor.fGettelefono_Vendedores());
+            stmt.setString(4, vendedor.fGetcorreo_Vendedores());
+            stmt.setString(5, vendedor.fGetestado_Vendedores());
+            stmt.setString(6, vendedor.fGettipo_Vendedores());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -127,7 +127,7 @@ public class daoCobradores {
         return rows;
     }
 
-    public int delete(clsCobradores cobrador) {
+    public int delete(clsVendedores vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -136,7 +136,7 @@ public class daoCobradores {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, cobrador.fGetid_Cobradores());
+            stmt.setInt(1, vendedor.fGetid_Vendedores());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -150,21 +150,21 @@ public class daoCobradores {
     }
 
 //    public List<Persona> query(Persona vendedor) { // Si se utiliza un ArrayList
-    public clsCobradores query(clsCobradores cobrador) {    
+    public clsVendedores query(clsVendedores vendedor) {    
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<clsCobradores> cobradores = new ArrayList<clsCobradores>();
+        List<clsVendedores> vendedores = new ArrayList<clsVendedores>();
         int rows = 0;
 
         try {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, cobrador.fGetid_Cobradores());
+            stmt.setInt(1, vendedor.fGetid_Vendedores());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int iId_cobrador = rs.getInt("Id_cobrador");
+                int iId_vendedor = rs.getInt("Id_vendedor");
                 String sNombre = rs.getString("Nombre");
                 String sDireccion = rs.getString("Direccion");
                 int iTelefono = rs.getInt("Telefono");
@@ -172,18 +172,18 @@ public class daoCobradores {
                 String sEstado = rs.getString("Estado");
                 String sTipo = rs.getString("Tipo");
                 
-                cobrador = new clsCobradores();
-                cobrador.fSetid_Cobradores(iId_cobrador);
-                cobrador.fSetnombre_Cobradores(sNombre);
-                cobrador.fSetdireccion_Cobradores(sDireccion);
-                cobrador.fSettelefono_Cobradores(iTelefono);
-                cobrador.fSetcorreo_Cobradores(sCorreo);
-                cobrador.fSetestado_Cobradores(sEstado);
-                cobrador.fSettipo_Cobradores(sTipo);
+                vendedor = new clsVendedores();
+                vendedor.fSetid_Vendedores(iId_vendedor);
+                vendedor.fSetnombre_Vendedores(sNombre);
+                vendedor.fSetdireccion_Vendedores(sDireccion);
+                vendedor.fSettelefono_Vendedores(iTelefono);
+                vendedor.fSetcorreo_Vendedores(sCorreo);
+                vendedor.fSetestado_Vendedores(sEstado);
+                vendedor.fSettipo_Vendedores(sTipo);
                 
-                //cobradores.add(cobrador); // Si se utiliza un ArrayList
+                //vendedores.add(vendedor); // Si se utiliza un ArrayList
             }
-            //System.out.println("Registros buscado:" + cobrador);
+            //System.out.println("Registros buscado:" + vendedor);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -192,8 +192,8 @@ public class daoCobradores {
             clsConexion.close(conn);
         }
 
-        //return cobradores;  // Si se utiliza un ArrayList
-        return cobrador;
+        //return vendedores;  // Si se utiliza un ArrayList
+        return vendedor;
     }
    
 }

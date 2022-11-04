@@ -18,7 +18,7 @@ package logistica.controlador;
     private String perestatus; 
 */
 public class clsConcepto {
-    int concodigo;
+    int conid;
     String connombre;
     String conestatus;
 
@@ -26,7 +26,7 @@ public class clsConcepto {
     }
 
     public clsConcepto(int codigo) {
-        this.concodigo= codigo;
+        this.conid= codigo;
     }
 
     public clsConcepto(String nombre, String estado) {
@@ -35,11 +35,11 @@ public class clsConcepto {
     }
 
     public int getcodigoc() {
-        return concodigo;
+        return conid;
     }
 
     public void setcodigoc(int codigo) {
-        this.concodigo = codigo;
+        this.conid = codigo;
     }
 
     public String getNombrec() {
@@ -60,7 +60,7 @@ public class clsConcepto {
 
     @Override
     public String toString() {
-        return "tbl_conceptos{" + "concodigo=" + concodigo + ", connombre=" + connombre + ", conestatus=" + conestatus + '}';
+        return "tbl_conceptos{" + "conid=" + conid + ", connombre=" + connombre + ", conestatus=" + conestatus + '}';
     }
     
 }

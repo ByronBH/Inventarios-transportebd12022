@@ -13,89 +13,78 @@ package ventas.controlador;
  */
 public class clsVendedores {
     //declaracion de variable para Vendedores 
-    int iId_vendedor;
-    int iTelefono;
-    String sNombre;
-    String sDireccion;
-    String sCorreo;
-    String sEstado;
-    String sTipo;
+    int vedcodigo;
+    String vednombre;
+    String veddireccion;
+    String vedtelefono;
+    String vednit;
+    String vedestatus;
 
     public clsVendedores() {
     }
 
-    public clsVendedores(int iId_vendedor) {
-    this.iId_vendedor = iId_vendedor;
+    public clsVendedores(int vedcodigo) {
+    this.vedcodigo = vedcodigo;
     }
 
-     public clsVendedores(String sNombre, String sDireccion, String sCorreo, String sEstado, String sTipo, int iId_vendedor,  int iTelefono) {
-        this.iId_vendedor = iId_vendedor;
-        this.iTelefono = iTelefono;
-        this.sNombre = sNombre;
-        this.sDireccion = sDireccion;
-        this.sCorreo = sCorreo;
-        this.sEstado = sEstado;
-        this.sTipo = sTipo;
-    }
-
-
-
-public int fGetid_Vendedores() {
-        return iId_vendedor;
-    }
-
-    public void fSetid_Vendedores(int iId_vendedor) {
-        this.iId_vendedor = iId_vendedor;
+     public clsVendedores(String vednombre, String veddireccion, String vedtelefono, String vednit, String vedestatus, int vedcodigo) {
+        this.vedcodigo = vedcodigo;
+        this.vednombre = vednombre;
+        this.veddireccion = veddireccion;
+        this.vedtelefono = vedtelefono;
+        this.vednit = vednit;
+        this.vedestatus = vedestatus;
     }
 
 
-    public String fGetnombre_Vendedores() {
-        return sNombre;
+
+public int Getvedcodigo() {
+        return vedcodigo;
     }
 
-    public void fSetnombre_Vendedores(String sNombre) {
-        this.sNombre = sNombre;
-    }
-
-    public String fGetdireccion_Vendedores() {
-        return sDireccion;
-    }
-
-    public void fSetdireccion_Vendedores(String sDireccion) {
-        this.sDireccion = sDireccion;
-    }
-
-public int fGettelefono_Vendedores() {
-        return iTelefono;
-    }
-
-    public void fSettelefono_Vendedores(int iTelefono) {
-        this.iTelefono = iTelefono;
+    public void Setvedcodigo(int vedcodigo) {
+        this.vedcodigo = vedcodigo;
     }
 
 
-    public String fGetcorreo_Vendedores() {
-        return sCorreo;
+    public String Getvednombre() {
+        return vednombre;
     }
 
-    public void fSetcorreo_Vendedores(String sCorreo) {
-        this.sCorreo = sCorreo;
+    public void Setvednombre(String vednombre) {
+        this.vednombre = vednombre;
     }
 
-    public String fGetestado_Vendedores() {
-        return sEstado;
+    public String Getveddireccion() {
+        return veddireccion;
     }
 
-    public void fSetestado_Vendedores(String sEstado) {
-        this.sEstado = sEstado;
+    public void Setveddireccion(String veddireccion) {
+        this.veddireccion = veddireccion;
     }
 
-    public String fGettipo_Vendedores() {
-        return sTipo;
+    public String Getvedtelefono() {
+        return vedtelefono;
     }
 
-    public void fSettipo_Vendedores(String sTipo) {
-        this.sTipo = sTipo;
+    public void Setvedtelefono(String vedtelefono) {
+        this.vedtelefono = vedtelefono;
+    }
+
+    public String Getvednit() {
+        return vednit;
+    }
+
+    public void Setvednit(String vednit) {
+        this.vednit = vednit;
+    }
+
+    public String Getvedestatus() {
+        return vedestatus;
+    }
+
+    public void Setvedestatus(String vedestatus) {
+        this.vedestatus = vedestatus;
     }
 
  
@@ -104,7 +93,7 @@ public int fGettelefono_Vendedores() {
 
     @Override
     public String toString() {
-         return "tbl_vendedores{" + "Id_vendedor =" + iId_vendedor + ", Nombre=" + sNombre + ", Direccion=" + sDireccion + ", Telefono=" + iTelefono +", Correo=" + sCorreo +", Estado=" + sEstado +", Tipo=" + sTipo + '}';
+         return "tbl_vendedores{" + "vedcodigo =" + vedcodigo + ", vednombre=" + vednombre + ", veddireccion=" + veddireccion + ", vedtelefono=" + vedtelefono +", vednit=" + vednit +", vedestatus=" + vedestatus + '}';
     }
     
 }

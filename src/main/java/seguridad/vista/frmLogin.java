@@ -89,6 +89,11 @@ public class frmLogin extends javax.swing.JFrame {
         });
 
         cbxAreas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "Area Seguridad", "Area Logistica", "Area Compras", "Area Ventas", "Area RRHH", "Prototipo" }));
+        cbxAreas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxAreasActionPerformed(evt);
+            }
+        });
 
         lblArea.setText("Area");
 
@@ -250,6 +255,10 @@ public class frmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbxAreasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAreasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxAreasActionPerformed
 
     /**
      * @param args the command line arguments

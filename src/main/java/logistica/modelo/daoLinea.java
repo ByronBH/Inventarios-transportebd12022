@@ -5,7 +5,7 @@
  */
 package logistica.modelo;
 
-
+import seguridad.modelo.clsConexion;
 import logistica.controlador.clsLinea;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

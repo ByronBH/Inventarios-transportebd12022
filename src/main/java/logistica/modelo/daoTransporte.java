@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 package logistica.modelo;
 
-import seguridad.modelo.clsConexion;
-import logistica.controlador.clsMarca;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import seguridad.modelo.*;
+import logistica.controlador.clsTransporte;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,36 +17,37 @@ import java.util.List;
  *
  * @author visitante
  */
-public class daoMarca {
+public class daoTransporte {
 
-    private static final String SQL_SELECT = "SELECT marcodigo, marnombre, marestatus FROM tbl_marcas";
-    private static final String SQL_INSERT = "INSERT INTO tbl_marcas(marnombre, marestatus) VALUES(?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_marcas SET marnombre=?, marestatus=? WHERE marcodigo = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_marcas WHERE marcodigo=?";
-    private static final String SQL_QUERY = "SELECT marcodigo, marnombre, marestatus FROM tbl_marcas WHERE marcodigo = ?";
+    private static final String SQL_SELECT = "SELECT tranmatricula, tranmodelo, tranmarca, trantipo FROM tbl_transporte";
+    private static final String SQL_INSERT = "INSERT INTO tbl_transporte(tranmatricula, tranmodelo, tranmarca, trantipo) VALUES(?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_transporte SET  tranmodelo=?, tranmarca=?, trantipo=? WHERE tranmatricula = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_transporte WHERE tranmatricula=?";
+    private static final String SQL_QUERY  = "SELECT tranmatricula, tranmodelo, tranmarca, trantipo FROM tbl_transporte WHERE tranmatricula = ?";
 
-    public List<clsMarca> select() {
+    public List<clsTransporte> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        clsMarca marca = null;
-        List<clsMarca> marcas = new ArrayList<clsMarca>();
-
+        clsTransporte perfil = null;
+        List<clsTransporte> perfiles = new ArrayList<clsTransporte>();
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("marcodigo");
-                String nombre = rs.getString("marnombre");
-                String estado = rs.getString("marestatus");
-                
-                marca = new clsMarca();
-                marca.setcodigo(codigo);
-                marca.setNombre(nombre);
-                marca.setestado(estado);
-                
-                marcas.add(marca);
+                int iPerfil_id = rs.getInt("tranmatricula");
+                String sPerfil_nombre = rs.getString("tranmodelo");
+                String sPerfil_estado = rs.getString("tranmarca");
+                String sTipo = rs.getString("trantipo");
+
+                perfil = new clsTransporte();
+                perfil.setTranmatricula(iPerfil_id);
+                perfil.setTranmodelo(sPerfil_nombre);
+                perfil.setTranmarca(sPerfil_estado);
+                 perfil.setTrantipo(sTipo);
+
+                perfiles.add(perfil);
             }
 
         } catch (SQLException ex) {
@@ -58,19 +58,20 @@ public class daoMarca {
             clsConexion.close(conn);
         }
 
-        return marcas;
+        return perfiles;
     }
 
-    public int insert(clsMarca marca) {
+    public int insert(clsTransporte perfil) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
             conn = clsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, marca.getNombre());
-            stmt.setString(2, marca.getestado());
-
+            stmt.setInt(1,  perfil.getTranmatricula());
+            stmt.setString(2, perfil.getTranmodelo());
+            stmt.setString(3, perfil.getTranmarca());
+            stmt.setString(4, perfil.getTrantipo());
 
             System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -85,7 +86,7 @@ public class daoMarca {
         return rows;
     }
 
-    public int update(clsMarca marca) {
+    public int update(clsTransporte aplicacion) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -94,9 +95,10 @@ public class daoMarca {
             conn = clsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, marca.getNombre());
-            stmt.setString(2, marca.getestado());
-            stmt.setInt(3, marca.getcodigo());
+            stmt.setString(1, aplicacion.getTranmodelo());
+            stmt.setString(2, aplicacion.getTranmarca());
+            stmt.setString(3, aplicacion.getTrantipo());
+            stmt.setInt(4,  aplicacion.getTranmatricula());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -110,8 +112,7 @@ public class daoMarca {
 
         return rows;
     }
-
-    public int delete(clsMarca marca) {
+    public int delete(clsTransporte perfil) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -120,7 +121,7 @@ public class daoMarca {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, marca.getcodigo());
+            stmt.setInt(1, perfil.getTranmatricula());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -133,33 +134,29 @@ public class daoMarca {
         return rows;
     }
 
-//    public List<Persona> query(Persona vendedor) { // Si se utiliza un ArrayList
-    public clsMarca query(clsMarca marca) {    
+    public clsTransporte query(clsTransporte perfil) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<clsMarca> marcas = new ArrayList<clsMarca>();
-        int rows = 0;
-
         try {
             conn = clsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, marca.getcodigo());
+            stmt.setInt(1, perfil.getTranmatricula()); //getId_perfil
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int codigo = rs.getInt("marcodigo");
-                String nombre = rs.getString("marnombre");
-                String estado = rs.getString("marestatus");
-                
-                marca = new clsMarca();
-                marca.setcodigo(codigo);
-                marca.setNombre(nombre);
-                marca.setestado(estado);
-                
-                //vendedores.add(vendedor); // Si se utiliza un ArrayList
+                int iPerfil_id = rs.getInt("tranmatricula");
+                String sPerfil_nombre = rs.getString("tranmodelo");
+                String sPerfil_estado = rs.getString("tranmarca");
+                String tipo = rs.getString("trantipo");
+
+                perfil = new clsTransporte();
+                perfil.setTranmatricula(iPerfil_id);
+                perfil.setTranmodelo(sPerfil_nombre);
+                perfil.setTranmarca(sPerfil_estado);
+                perfil.setTrantipo(tipo);
             }
-            //System.out.println("Registros buscado:" + vendedor);
+            //System.out.println("Registros buscado:" + persona);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -168,8 +165,7 @@ public class daoMarca {
             clsConexion.close(conn);
         }
 
-        //return vendedores;  // Si se utiliza un ArrayList
-        return marca;
+        //return personas;  // Si se utiliza un ArrayList
+        return perfil;
     }
-        
 }
