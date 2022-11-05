@@ -27,7 +27,7 @@ CREATE TABLE tbl_movimientoen
     movestado VARCHAR(30) NOT NULL
     
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;        
-        
+	
 CREATE TABLE tbl_movimientode
 (
 	movid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -37,6 +37,8 @@ CREATE TABLE tbl_movimientode
     procodigo INT NOT NULL,
     lincodigo INT NOT NULL,
     marcodigo INT NOT NULL, 
+    movcantidad INT NOT NULL,
+    prodexistencia INT NOT NULL,
     FOREIGN KEY (movid) REFERENCES tbl_movimientoen(movid), 
     FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo), 
     FOREIGN KEY (conid) REFERENCES tbl_conceptos(conid),
